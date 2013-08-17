@@ -33,6 +33,8 @@ class SmsQueueController extends AbstractCliController
 	 * @var SmsService
 	 */
 	protected $smsService;
+	
+	protected $emailReceiver;
 
 	public function runAction()
 	{
@@ -97,7 +99,7 @@ class SmsQueueController extends AbstractCliController
 
 
 		if ($sendMail && 0 < $smsCountTotal) {
-			$this->emailer()->sendMail('operations@quickinfo.dk',
+			$this->emailer()->sendMail($this->getEmailReceiver(),
 			                           'FlamingSms [' . $this->env() . '] - smsqueue run',
 			                           $output);
 		}
@@ -150,7 +152,7 @@ class SmsQueueController extends AbstractCliController
 		}
 
 		if ((0 < $sentCleanupCount || 0 < $queuedCleanupCount) && $sendMail) {
-			$this->emailer()->sendMail('operations@quickinfo.dk',
+			$this->emailer()->sendMail($this->getEmailReceiver(),
 			                           'FlamingSms [' . $this->env() . '] - smsqueue clean',
 			                           $output);
 		}
@@ -179,5 +181,14 @@ class SmsQueueController extends AbstractCliController
 	{
 		$this->smsService = $smsService;
 		return $this;
+	}
+	
+	public function getEmailReceiver()
+	{
+		if (!$this->emailReceiver) {
+			$config = $this->getServiceLocator()->get('Configuration');
+			$this->emailReceiver = $config['flamingsms']['sms_queue']['default_email_receiver'];
+		}
+		return $this->emailReceiver;
 	}
 }

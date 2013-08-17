@@ -113,6 +113,10 @@ return array(
 			'coolsms' => 'FlamingSms\SmsGateway\CoolSms',
 			'fakegw' => 'FlamingSms\SmsGateway\FakeGw',
 		),
+		
+		'sms_queue' => array(
+			'default_email_receiver' => 'my-receiver@email.invalid'
+		),
 
 		'gateway_config' => array(
 			'coolsms' => array(
