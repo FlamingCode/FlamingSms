@@ -2,7 +2,7 @@
 	"name": "flaming-code/flaming-sms",
 	"description": "Module that provides sms sending functionality for ZF2 applications",
 	"type": "library",
-	"license": "GPL-2.0",
+	"license": "MIT",
 	"homepage": "https://github.com/FlamingCode/FlamingSms",
 	"keywords": [
 		"flamingsms",
